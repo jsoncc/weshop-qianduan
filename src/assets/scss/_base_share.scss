@@ -1,0 +1,25 @@
+._flex{
+  display: -webkit-flex;
+  display: flex;
+}
+._flexsc{
+  @extend  ._flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+._flexcc{
+  @extend  ._flex;
+  justify-content: center;
+  align-items: center;
+}
+._flexec{
+  @extend  ._flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+._flexss{
+  @extend  ._flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

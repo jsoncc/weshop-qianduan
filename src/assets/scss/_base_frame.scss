@@ -1,0 +1,155 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.15;
+    color: #303133;
+    background-color: #fff;
+    height: 100%;
+}
+/***********动画导入***************/
+/*********************导航样式**********************************************/
+$max_sitebar_width:230px;//最大宽度
+$max_sitebar_one_width:100px;//一级导航最大宽度
+$max_sitebar_two_width:130px; //二级导航最大宽度
+//通用字体图标颜色
+.site-common-color{
+  color: $theme-color;
+}
+
+//主窗口
+.main{
+  background-color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+
+  //左边导航
+  .site-sitebar{
+      height: 100%;
+     // animation: 1s fadeInLeft;
+      .site-sitebar_normal{
+           width: $max_sitebar_width;
+      }
+      //左边一级导航
+      .site-sitebar-one{
+        width: $max_sitebar_one_width;
+        background-color: $bg_color;
+        height: 100%;
+        z-index: 10;
+
+        float: left;
+      }
+      //左边二级导航
+      .site-sitebar-two{
+        width: $max_sitebar_two_width;
+        height: 100%;
+        z-index: 10;
+        background-color: #fff;
+        border-style:none;
+        float: left;
+      }
+      .site-sitebar-two-fold{
+        left: 0;
+        background-color: #fafafa;
+        border-style:none;
+        border-right: #f1f1f1 solid 1px;
+       // animation: 2s  fadeOutLeft;
+      }
+      //折叠后的宽度
+      .site-sitebar-fold,.site-sitebar-one-fold,.site-sitebar-two-fold{
+            display: none;
+      }
+  }
+
+  //右边工作区
+  .content{
+    flex: 1;
+    height:100%;
+    background-color: #f1f1f1;
+    z-index: 10;
+    //animation: .6s  fadeInRight;
+    margin-top: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding:  0 30px;
+    //工作区
+    .workspace{
+   min-width: 1280px;
+   padding: 0 30px;
+   height: 600px;
+   overflow-y: scroll;
+
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 30px auto;
+   padding-bottom: 300px;
+   padding-top: 10px;
+
+    }
+    /************************滚动条件样式**************************/
+
+     	.workspace::-webkit-scrollbar-track {
+     	-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
+     	background-color:#f8f8f8;
+     	border-radius:10px;
+     }
+    .workspace::-webkit-scrollbar {
+     	width:10px;
+     	background-color:#f8f8f8;
+     }
+     .workspace::-webkit-scrollbar-thumb {
+     	background-color:#bbb;
+     	border-radius:10px;
+     	//background-image:-webkit-linear-gradient(90deg,rgba(0,0,0,.2) 25%,transparent 25%,transparent 50%,rgba(0,0,0,.2) 50%,rgba(0,0,0,.2) 75%,transparent 75%,transparent)
+     }
+
+    //顶部导航
+
+    .site-navbar{
+	   position: fixed;
+	   top: 0;
+       width: 100%;
+       height: 50px;
+       box-shadow: 0 5px 5px #ddd;
+       display: -webkit-flex;
+       display: flex;
+       justify-content: flex-start;
+       align-items: center;
+       background-color: #fff;
+       z-index: 9;
+       // animation: .6s fadeInDown;
+    }
+  }
+}
+
+   .site-sitebar-fold{
+      left: 0;
+    }
+    .site-navbar-normal{
+      left: $max_sitebar_width;
+    }
+
+
+
+
+
+._flex_space-around{
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+ .main-content-normal{
+    width: 80%;
+  }
+  .main-content-fold{
+    width: 100%;
+  }

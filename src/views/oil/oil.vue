@@ -6,42 +6,48 @@
     </el-row>
     <!--表格数据-->
 
-      <el-table stripe border v-bind:data="oils" style="width: 100%">
-        <el-table-column label="序号" type="index"></el-table-column>
+    <el-table stripe border v-bind:data="oils" style="width: 100%">
+      <el-table-column label="序号" type="index"></el-table-column>
 
 
-        <el-table-column label="油站名称" width="180" prop="oil_name">
-        </el-table-column>
+      <el-table-column label="油站名称" width="180" prop="oil_name">
+      </el-table-column>
 
-        <el-table-column label="地址" width="180" prop="address">
-        </el-table-column>
+      <el-table-column label="地址" width="180" prop="address">
+      </el-table-column>
 
-        <el-table-column label="优惠" prop="discount">
+      <el-table-column label="优惠" prop="discount">
 
-        </el-table-column>
+      </el-table-column>
 
-        <el-table-column label="添加日期" prop="adddate">
-        </el-table-column>
+      <el-table-column label="添加日期" prop="adddate">
+      </el-table-column>
 
-        <el-table-column label="状态" prop="status">
-        </el-table-column>
+      <el-table-column prop="status" width="100" header-align="center" align="center" label="状态">
+        <template v-slot="scope">
+          <el-tag v-if="scope.row.status==1">启用</el-tag>
+          <el-tag type="info" v-else>禁用</el-tag>
+        </template>
+      </el-table-column>
 
-        <el-table-column label="操作">
+      <el-table-column label="操作">
+        <template v-slot="scope">
           <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn"></font-awesome-icon>&nbsp&nbsp
-          <font-awesome-icon v-bind:icon="['fas','trash-alt']" size="lg" title="删除" class="fasbtn"></font-awesome-icon>
-        </el-table-column>
-      </el-table>
-      <!-- 新增或修改 -->
-      <!-- <abc></abc> -->
+          <font-awesome-icon v-bind:icon="['fas','trash-alt']" size="lg" title="删除" class="fasbtn" @click="del(scope.row.id)"></font-awesome-icon>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 新增或修改 -->
+    <!--添加或修改-->
+    <!-- <oil-save-or-update :visible.sync="isshow" @refeshData="queryOil" :tmpoil="showdata"></oil-save-or-update> -->
   </div>
 </template>
 
 <script>
-  import http from '../../utils/http.js'
+  // import http from '../../utils/http.js'
 
   // 导入新增或修改
-  // const OilSaveOrUpdate =()=>import('@/views/oil/oil-save-update.vue')
-
+  const OilSaveOrUpdate = () => import('@/views/oil/oil-save-update.vue')
 
   export default {
     data() {
@@ -51,30 +57,55 @@
         oils: []
       }
     },
-    // components:{
-    //   "abc":OilSaveOrUpdate()
+    // components: {
+    //   OilSaveOrUpdate
     // },
+    
     methods: {
       queryOil: function() {
 
-        http.post("/api/oil/list", {}).then(response => {
-          this.$business.queryoil({}).then(response => {
-            //判断接口返回的数据是否正常
-            if (response.code == 200) {
-              // 获取数据
-              this.oils = response.data;
-            } else {
+        this.$business.queryoil({}).then(response => {
+          //判断接口返回的数据是否正常
+          if (response.code == 200) {
+            // 获取数据
+            this.oils = response.data;
+          } else {
+            this.$message({
+              showClose: true,
+              message: '跟个🐷似的',
+              type: 'error'
+            });
+          }
+        });
+      },
+      //删除油站
+      del(id) {
+        this.$confirm('您确定要删除吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+
+          //调用删除功能
+          this.$business.deleteoil(id).then(res => {
+            if (res.code == 200) {
               this.$message({
-                showClose: true,
-                message: '跟个🐷似的',
-                type: 'error'
+                type: 'success',
+                message: '删除成功!'
+              });
+              //重新查询一次
+              this.queryOil();
+            } else if (res.code == 0) {
+              this.$message({
+                type: 'error',
+                message: res.msg
               });
             }
-          });
-
-        });
+          })
+        }).catch(() => {});
       }
     },
+
     created() {
       this.queryOil();
     }

@@ -6,6 +6,11 @@ export default {
   //查询油站列表
   queryoil: function(params) {
     return http.post(api.listoil, params);
+  },
+  
+  //删除油站
+  deleteoil:function(id){
+    return http.get(api.deleteoild,{"id":id});
   }
 
 }

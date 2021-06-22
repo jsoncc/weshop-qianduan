@@ -38,7 +38,11 @@
     <el-row class="oil_row">
       <el-col :span="6" class="oil_label">图片:</el-col>
       <el-col :span="18" class="oil_ipt_root">
-        <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card">
+
+        <!-- <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card">
+          <i class="el-icon-plus"></i>
+        </el-upload> -->
+        <el-upload :action="uploadurl" list-type="picture-card" >
           <i class="el-icon-plus"></i>
         </el-upload>
       </el-col>
@@ -53,6 +57,9 @@
 </template>
 
 <script>
+  //引入api
+  import api from '@/utils/api.js'
+
   export default {
     data() {
       return {
@@ -63,7 +70,11 @@
           latitude: 0,
           discount: '',
           explains: ''
-        }
+        },
+        oilpics:[],  //油站图片
+        isshowmap: false,
+        uploadurl:api.uploadfile,
+        imageUrls:[]
       }
     },
     //保存再次点击时清空

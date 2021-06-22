@@ -43,12 +43,17 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
     git add .  将所有更新的文件全部加入暂存区
     git commit -m '提交说明'
     将本地仓库与远程仓库关联起来：
+    
 ```text
 二次上传：
-1. git status
-2. git add
-3. git commit
-4. git push 
+1. 查看哪些文件被修改了
+    git status
+2. 添加修改的文件到暂存区
+    git add file1  file2 ....
+3. 提交文件
+    git commit -m ""
+4. 上传到服务器
+    git push origin main
 ```
 
  

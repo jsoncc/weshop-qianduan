@@ -14,7 +14,7 @@ axios.interceptors.response.use(function(response) {
     //获取接口返回的数据
     var data = response.data;
     // console.log("接口数据", data);
-    console.log("接口数据", JSON.stringify(data));
+    // console.log("接口数据", JSON.stringify(data));
     return data;
   } else {
     Message({

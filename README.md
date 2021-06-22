@@ -43,7 +43,17 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
     git add .  将所有更新的文件全部加入暂存区
     git commit -m '提交说明'
     将本地仓库与远程仓库关联起来：
-   git remote add origin https://github.com/jsoncc/weshop-qianduan.git
+```text
+二次上传：
+1. git status
+2. git add
+3. git commit
+4. git push 
+```
+
+ 
+
+  git remote add origin https://github.com/jsoncc/weshop-qianduan.git
     将本地仓库的代码推送到远程服务器上:
    git push -u origin master
    origin 代表远程仓库

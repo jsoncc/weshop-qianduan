@@ -2,7 +2,7 @@
   <div>
     <!--第一行增加一个添加按钮-->
     <el-row class="btn">
-      <el-button type="primary" size="small">添加油站</el-button>
+      <el-button type="primary" size="small" @click="saveorupdate()">添加油站</el-button>
     </el-row>
     <!--表格数据-->
 
@@ -10,13 +10,17 @@
       <el-table-column label="序号" type="index"></el-table-column>
 
 
-      <el-table-column label="油站名称" width="180" prop="oil_name">
+      <el-table-column label="油站名称" width="150" prop="oil_name">
       </el-table-column>
 
       <el-table-column label="地址" width="180" prop="address">
       </el-table-column>
 
       <el-table-column label="优惠" prop="discount">
+
+      </el-table-column>
+
+      <el-table-column label="说明" prop="explains">
 
       </el-table-column>
 
@@ -40,6 +44,7 @@
     <!-- 新增或修改 -->
     <!--添加或修改-->
     <!-- <oil-save-or-update :visible.sync="isshow" @refeshData="queryOil" :tmpoil="showdata"></oil-save-or-update> -->
+    <oil-save-or-update :visible.sync="isshow" @refreshData="queryOil"></oil-save-or-update>
   </div>
 </template>
 
@@ -54,16 +59,17 @@
       //返回一个对象
       return {
         //在这里定义数据属性
-        oils: []
+        oils: [],
+        isshow: false //是否显示添加框
       }
     },
-    // components: {
-    //   OilSaveOrUpdate
-    // },
-    
-    methods: {
-      queryOil: function() {
+    components: {
+      OilSaveOrUpdate
+    },
 
+    methods: {
+      //查询
+      queryOil: function() {
         this.$business.queryoil({}).then(response => {
           //判断接口返回的数据是否正常
           if (response.code == 200) {
@@ -103,6 +109,11 @@
             }
           })
         }).catch(() => {});
+      },
+
+      //添加油站
+      saveorupdate() {
+        this.isshow = true;
       }
     },
 

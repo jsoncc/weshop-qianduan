@@ -48,7 +48,8 @@
         -->
         <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar"> -->
 
-        <el-upload :action="uploadurl" list-type="picture-card" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
+        <el-upload :action="uploadurl" list-type="picture-card" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess"
+          :on-remove="removepic">
           <i class="el-icon-plus"></i>
 
         </el-upload>
@@ -114,19 +115,44 @@
         }
       },
     },
+    
     methods: {
+
       // 保存商品
       save() {
-        this.$business.saveoil(this.oil).then(res => {
+
+        // 保存商品
+        this.oil.pics = this.oilpics;
+        console.log("油站信息：", JSON.stringify(this.oil))
+
+        var rs;
+        if (this.oil.id) { //要执行修改
+          rs = this.$business.updateoil(this.oil);
+        } else {
+          rs = this.$business.saveoil(this.oil)
+        }
+        rs.then(res => {
           if (res.code == 200) {
             this.$message.success("保存成功");
-            // 保存成功后关闭
+            //关闭
             this.close();
-            // 表格显示保存成功的数据，就是刷新一下页面
-            this.$emit("refreshData")
+            //抛出一个事件  去触发父组件的方法
+            this.$emit("refeshData");
           }
         });
       },
+
+      // this.$business.saveoil(this.oil).then(res => {
+      //   if (res.code == 200) {
+      //     this.$message.success("保存成功");
+      //     // 保存成功后关闭
+      //     this.close();
+      //     // 表格显示保存成功的数据，就是刷新一下页面
+      //     this.$emit("refreshData")
+      //   }
+      // });
+
+
       //页面的取消按钮
       close() {
         //抛出一个事件
@@ -136,14 +162,16 @@
 
       //用户头像上传
       //上传成功之后的图片
-      handleAvatarSuccess(res, file,fileList) {
-        console.log("上传成功" ,fileList)
+      handleAvatarSuccess(res, file, fileList) {
+        console.log("上传成功", fileList)
+
+        this.processpic(fileList);
+
 
         //对应上面的 <img v-if>
         // this.imageUrl = URL.createObjectURL(file.raw);
 
-        // //先清空
-        // this.imageUrls=[];
+
         // //遍历上传的结果
         // for(let i in fileList){
         //   let tmp = fileList[i];
@@ -168,9 +196,22 @@
           this.$message.error('上传头像图片大小不能超过 10MB!');
         }
         return isLt10M;
+      },
+      //移除图片
+      removepic(file, fileList) {
+        console.log("移除图片", fileList);
+        this.processpic(fileList);
+      },
+      //处理上传的图片集
+      processpic(fileList) {
+        //先清空
+        this.imageUrls = [];
+        //遍历上传的结果
+        for (let i in fileList) {
+          let tmp = fileList[i];
+          this.oilpics.push(tmp.response.data);
+        }
       }
-
-
 
 
     }
@@ -199,10 +240,10 @@
 
 
   .avatar {
-      width: 178px;
-      height: 178px;
-      display: block;
-      float: left;
-      margin-left: 10px;
-    }
+    width: 178px;
+    height: 178px;
+    display: block;
+    float: left;
+    margin-left: 10px;
+  }
 </style>

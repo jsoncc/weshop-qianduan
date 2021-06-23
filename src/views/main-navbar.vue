@@ -19,7 +19,7 @@
          get:function(){
            return this.$store.state.common.sidebarFold;
          },
-         set:function(val){console.log("折叠",val, this.$store)
+         set:function(val){
            this.$store.commit("updateSidebarFold",val);
          }
        }

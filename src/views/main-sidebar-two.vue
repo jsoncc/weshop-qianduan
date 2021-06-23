@@ -25,13 +25,17 @@
       $route: function(to) {
         if (to.path !== this.currentPath) {
           this.currentPath = to.path;
-           this.menus=this.$store.state.common.twomenus;
+          this.menus = this.$store.state.common.currentMenu.children || [];
         }
       }
     },
     created() {
-      this.currentPath = this.$route.path;
-      this.menus=this.$store.state.common.twomenus;
+      this.menus = this.$store.state.common.currentMenu.children || [];
+      if (this.menus.length > 0){
+         this.currentPath = this.menus[0].path;
+         this.$router.push(this.currentPath);
+      }
+       
     },
     methods: {
 

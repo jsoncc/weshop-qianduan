@@ -38,7 +38,7 @@
     methods: {
       goto() {
         this.$router.push(this.item.path);
-         this.$store.commit("updateTwomenus",this.item.children||[]);
+        this.$store.commit("updateCurrentMenu",this.item);
       }
     }
   }
@@ -61,7 +61,7 @@
   .sitebar-item-root:hover,
   .sitebar-item-root:active,
   .is-active {
-    background-color: #555;
+    background-color: #333;
     color: $font-color;
     border-style: none;
     border-bottom: #999 solid 1px;

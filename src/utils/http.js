@@ -4,11 +4,17 @@ import {
   Message
 } from 'element-ui';
 
+// 引入环境模块
+import host from './env.js'
+
+// 全局配置-服务器地址
+axios.defaults.baseURL = "http://localhost:8090"
+
 // 添加响应拦截器
 axios.interceptors.response.use(function(response) {
   // 对响应数据做点什么
 
-  console.log("响应拦截器", response)
+  //console.log("响应拦截器", response)
 
   if (response.status == 200) {
     //获取接口返回的数据
@@ -28,7 +34,7 @@ axios.interceptors.response.use(function(response) {
   return Promise.reject(error);
 });
 
-axios.defaults.baseURL = "http://localhost:8090"
+
 
 export default {
   get: function(url, params) {

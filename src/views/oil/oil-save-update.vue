@@ -42,9 +42,20 @@
         <!-- <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card">
           <i class="el-icon-plus"></i>
         </el-upload> -->
-        <el-upload :action="uploadurl" list-type="picture-card" >
+
+        <!-- 加上在上传的时候会多一个图片
+              感觉应该多显示的这个才是对的，因为设置了只显示一个图片
+        -->
+        <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar"> -->
+
+        <el-upload :action="uploadurl" list-type="picture-card" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
           <i class="el-icon-plus"></i>
+
         </el-upload>
+
+        <!-- <template v-for="(imageUrl,index) in imageUrls">
+          <img :src="imageUrl" :key="index" class="avatar">
+        </template> -->
       </el-col>
     </el-row>
 
@@ -57,7 +68,7 @@
 </template>
 
 <script>
-  //引入api
+  //引入api @相当于src
   import api from '@/utils/api.js'
 
   export default {
@@ -71,12 +82,23 @@
           discount: '',
           explains: ''
         },
-        oilpics:[],  //油站图片
+        oilpics: [], //油站图片.
         isshowmap: false,
-        uploadurl:api.uploadfile,
-        imageUrls:[]
+        uploadurl: api.uploadfile,
+        imageUrls: []
+      };
+    },
+
+    props: {
+      visible: {
+        type: Boolean,
+        default: false
+      },
+      tmpoil: {
+        type: Object
       }
     },
+
     //保存再次点击时清空
     watch: {
       visible: function(val) {
@@ -90,7 +112,7 @@
             explains: ''
           };
         }
-      }
+      },
     },
     methods: {
       // 保存商品
@@ -111,15 +133,46 @@
         this.$emit("update:visible", false)
 
       },
-    },
-    props: {
-      visible: {
-        type: Boolean,
-        default: false
+
+      //用户头像上传
+      //上传成功之后的图片
+      handleAvatarSuccess(res, file,fileList) {
+        console.log("上传成功" ,fileList)
+
+        //对应上面的 <img v-if>
+        // this.imageUrl = URL.createObjectURL(file.raw);
+
+        // //先清空
+        // this.imageUrls=[];
+        // //遍历上传的结果
+        // for(let i in fileList){
+        //   let tmp = fileList[i];
+        //   let tmpurl = URL.createObjectURL(tmp.raw);
+        //   this.imageUrls.push(tmpurl);
+        // }
+
       },
-      tmpoil: {
-        type: Object
+      //上传前的图片的类型
+      beforeAvatarUpload(file) {
+
+        var ptype = "image/jpeg;image/png"
+
+        // const isJPG = file.type === 'image/jpeg';
+        const isLt10M = file.size / 1024 / 1024 < 10;
+
+        if (ptype.indexOf(file.type) < 0) {
+          this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+          return false;
+        }
+        if (!isLt10M) {
+          this.$message.error('上传头像图片大小不能超过 10MB!');
+        }
+        return isLt10M;
       }
+
+
+
+
     }
   }
 </script>
@@ -143,4 +196,13 @@
   .oil_ipt_root {
     text-align: left;
   }
+
+
+  .avatar {
+      width: 178px;
+      height: 178px;
+      display: block;
+      float: left;
+      margin-left: 10px;
+    }
 </style>

@@ -99,10 +99,11 @@
     },
 
     methods: {
-      //查询
+      //查询 这个this指的是啥
       queryOil: function() {
         this.$business.queryoil({}).then(response => {
           //判断接口返回的数据是否正常
+          // console.log(response);
           if (response.code == 200) {
             // 获取数据
             this.oils = response.data;

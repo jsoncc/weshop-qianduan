@@ -48,8 +48,8 @@
         -->
         <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar"> -->
 
-        <el-upload :action="uploadurl" :file-list="imglist" list-type="picture-card" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess"
-          :on-remove="removepic">
+        <el-upload :action="uploadurl" :file-list="imglist" list-type="picture-card" :before-upload="beforeAvatarUpload"
+          :on-success="handleAvatarSuccess" :on-remove="removepic">
           <i class="el-icon-plus"></i>
 
         </el-upload>
@@ -72,10 +72,13 @@
   //引入api @相当于src
   import api from '@/utils/api.js'
 
+  import host from '../../utils/env.js'
+
   export default {
     data() {
       return {
         imglist: [],
+        host: host,
         oil: {
           oil_name: '',
           address: '',
@@ -103,7 +106,7 @@
 
     //保存再次点击时清空 file_list=[]
     watch: {
-      tmpoil:function(val){
+      tmpoil: function(val) {
         if (val == undefined) {
           this.oil = {
             oil_name: '',
@@ -113,8 +116,18 @@
             discount: '',
             explains: ''
           };
-        }else{
-          this.oil=val;
+          this.imglist = [];
+          this.oilpics=[];//置空
+        } else {
+          this.oil = val;
+          var tmp = this.oil.attachments;
+          // 修改功能的图片显示
+          for (var i in tmp) {
+            this.imglist.push({
+              url: this.host + "/" + tmp[i].attUrl
+            });
+          }
+
         }
       }
     },
@@ -130,7 +143,7 @@
 
         //保存和修改的区别是保存的时候不传ID，修改的时候有id
         var rs;
-        if (this.oil.id) { 
+        if (this.oil.id) {
           //要执行修改
           rs = this.$business.updateoil(this.oil);
         } else {

@@ -75,7 +75,7 @@
     <!-- 新增或修改 -->
     <!--添加或修改-->
     <!-- <oil-save-or-update :visible.sync="isshow" @refeshData="queryOil" :tmpoil="showdata"></oil-save-or-update> -->
-    <oil-save-or-update :visible.sync="isshow" @refreshData="queryOil" :tmpoil="showdata"></oil-save-or-update>
+    <oil-save-or-update ref="saveOrUpdate" :visible.sync="isshow" @refreshData="queryOil" :tmpoil="showdata"></oil-save-or-update>
   </div>
 </template>
 
@@ -148,7 +148,7 @@
 
       //添加油站
       saveorupdate(data) {
-        console.log("edit:", data);
+        // console.log("edit:", data);
         this.showdata = data;
         this.isshow = true;
       }

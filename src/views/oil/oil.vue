@@ -7,8 +7,39 @@
     <!--表格数据-->
 
     <el-table stripe border v-bind:data="oils" style="width: 100%">
-      <el-table-column label="序号" type="index"></el-table-column>
+      <!--增加一列表 显示展开行内容-->
+      <el-table-column type="expand">
+        <template v-slot="props">
+          <el-form label-position="left" class="demo-table-expand">
+            <el-form-item label="油站名称">
+              <span>{{ props.row.oil_name }}</span>
+            </el-form-item>
+            <el-form-item label="地址">
+              <span>{{ props.row.address }}</span>
+            </el-form-item>
+            <el-form-item label="优惠">
+              <span>{{ props.row.discount }}</span>
+            </el-form-item>
+            <el-form-item label="添加日期">
+              <span>{{ props.row.adddate }}</span>
+            </el-form-item>
+            <el-form-item label="状态">
+              <el-tag v-if="props.row.status==1">启用</el-tag>
+              <el-tag type="info" v-else>禁用</el-tag>
+            </el-form-item>
+            <el-form-item label="说明">
+              <span>{{ props.row.explains }}</span>
+            </el-form-item>
+            <el-form-item label="图片">
+              <template v-for="pic in props.row.attachments">
+                <img :src="host+pic.attMiniUrl" class="oilimg" />
+              </template>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
 
+      <el-table-column label="序号" type="index"></el-table-column>
 
       <el-table-column label="油站名称" width="150" prop="oil_name">
       </el-table-column>

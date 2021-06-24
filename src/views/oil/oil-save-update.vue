@@ -48,7 +48,7 @@
         -->
         <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar"> -->
 
-        <el-upload :action="uploadurl" list-type="picture-card" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess"
+        <el-upload :action="uploadurl" :file-list="imglist" list-type="picture-card" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess"
           :on-remove="removepic">
           <i class="el-icon-plus"></i>
 
@@ -75,6 +75,7 @@
   export default {
     data() {
       return {
+        imglist: [],
         oil: {
           oil_name: '',
           address: '',
@@ -115,7 +116,7 @@
         }
       },
     },
-    
+
     methods: {
 
       // 保存商品

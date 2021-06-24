@@ -81,6 +81,7 @@
 
 <script>
   // import http from '../../utils/http.js'
+  import host from '../../utils/env.js'
 
   // 导入新增或修改
   const OilSaveOrUpdate = () => import('@/views/oil/oil-save-update.vue')
@@ -91,7 +92,8 @@
       return {
         //在这里定义数据属性
         oils: [],
-        isshow: false //是否显示添加框
+        isshow: false, //是否显示添加框
+        host: host+"/"
       }
     },
     components: {
@@ -166,5 +168,14 @@
     color: $font-color;
     cursor: pointer;
     margin-left: 10px;
+  }
+  
+  //列表的图片样式
+  .oilimg{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
   }
 </style>

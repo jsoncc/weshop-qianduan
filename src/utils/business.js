@@ -17,6 +17,11 @@ export default {
   // 保存油站
   saveoil: function(params) {
     return http.post(api.saveoil, params);
+  },
+
+  // 修改油站
+  updateoil: function(params) {
+    return http.post(api.updateoil, params);
   }
 
 }

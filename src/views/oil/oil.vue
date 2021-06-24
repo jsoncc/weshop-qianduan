@@ -67,7 +67,7 @@
 
       <el-table-column label="操作">
         <template v-slot="scope">
-          <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn"></font-awesome-icon>&nbsp&nbsp
+          <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn" @click="saveorupdate(scope.row)"></font-awesome-icon>&nbsp&nbsp
           <font-awesome-icon v-bind:icon="['fas','trash-alt']" size="lg" title="删除" class="fasbtn" @click="del(scope.row.id)"></font-awesome-icon>
         </template>
       </el-table-column>
@@ -75,7 +75,7 @@
     <!-- 新增或修改 -->
     <!--添加或修改-->
     <!-- <oil-save-or-update :visible.sync="isshow" @refeshData="queryOil" :tmpoil="showdata"></oil-save-or-update> -->
-    <oil-save-or-update :visible.sync="isshow" @refreshData="queryOil"></oil-save-or-update>
+    <oil-save-or-update :visible.sync="isshow" @refreshData="queryOil" :tmpoil="showdata"></oil-save-or-update>
   </div>
 </template>
 
@@ -93,7 +93,8 @@
         //在这里定义数据属性
         oils: [],
         isshow: false, //是否显示添加框
-        host: host+"/"
+        host: host + "/",
+        showdata: {}
       }
     },
     components: {
@@ -146,7 +147,9 @@
       },
 
       //添加油站
-      saveorupdate() {
+      saveorupdate(data) {
+        console.log("edit:", data);
+        this.showdata = data;
         this.isshow = true;
       }
     },
@@ -169,9 +172,9 @@
     cursor: pointer;
     margin-left: 10px;
   }
-  
+
   //列表的图片样式
-  .oilimg{
+  .oilimg {
     width: 100px;
     height: 100px;
     float: left;

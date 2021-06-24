@@ -101,10 +101,10 @@
       }
     },
 
-    //保存再次点击时清空
+    //保存再次点击时清空 file_list=[]
     watch: {
-      visible: function(val) {
-        if (val == true) {
+      tmpoil:function(val){
+        if (val == undefined) {
           this.oil = {
             oil_name: '',
             address: '',
@@ -113,8 +113,10 @@
             discount: '',
             explains: ''
           };
+        }else{
+          this.oil=val;
         }
-      },
+      }
     },
 
     methods: {
@@ -126,10 +128,13 @@
         this.oil.pics = this.oilpics;
         console.log("油站信息：", JSON.stringify(this.oil))
 
+        //保存和修改的区别是保存的时候不传ID，修改的时候有id
         var rs;
-        if (this.oil.id) { //要执行修改
+        if (this.oil.id) { 
+          //要执行修改
           rs = this.$business.updateoil(this.oil);
         } else {
+          //执行保存，也就是添加油站
           rs = this.$business.saveoil(this.oil)
         }
         rs.then(res => {

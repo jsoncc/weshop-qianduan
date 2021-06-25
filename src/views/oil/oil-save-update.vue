@@ -49,7 +49,7 @@
         <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar"> -->
 
         <el-upload :action="uploadurl" :file-list="imglist" list-type="picture-card" :before-upload="beforeAvatarUpload"
-          :on-success="handleAvatarSuccess" :on-remove="removepic">
+          :on-success="handleAvatarSuccess" :on-remove="removepic" :before-remove="removeatt">
           <i class="el-icon-plus"></i>
 
         </el-upload>
@@ -90,7 +90,8 @@
         oilpics: [], //油站图片.
         isshowmap: false,
         uploadurl: api.uploadfile,
-        imageUrls: []
+        imageUrls: [],
+        issub: false
       };
     },
 
@@ -117,14 +118,15 @@
             explains: ''
           };
           this.imglist = [];
-          this.oilpics=[];//置空
+          this.oilpics = []; //置空
         } else {
           this.oil = val;
           var tmp = this.oil.attachments;
           // 修改功能的图片显示
           for (var i in tmp) {
             this.imglist.push({
-              url: this.host + "/" + tmp[i].attUrl
+              url: this.host + "/" + tmp[i].attUrl,
+              id: tmp[i].id
             });
           }
 
@@ -136,6 +138,11 @@
 
       // 保存商品
       save() {
+        if (this.issub) {
+          return;
+        }
+        this.issub = true;
+
 
         // 保存商品
         this.oil.pics = this.oilpics;
@@ -158,6 +165,7 @@
             //抛出一个事件  去触发父组件的方法
             this.$emit("refeshData");
           }
+          this.issub = false;
         });
       },
 
@@ -230,7 +238,36 @@
           let tmp = fileList[i];
           this.oilpics.push(tmp.response.data);
         }
+      },
+      // // 删除附件-图片
+      // removeatt(file, fileList) {
+      //   console.log("要删除的图片：", file);
+      //   this.$confirm('确定要删除图片吗?', '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //     type: 'warning'
+      //   }).then(() => {
+
+      //     this.$business.deleteatt({id:file.id}).then(res=>{
+      //       console.log(res);
+      //     })
+
+      //   }).catch(() => {
+      //     //返回（取消）有误
+      //     return false;
+      //   });
+      // },
+      // 删除附件-图片--改为异步修改返回的值
+      async removeatt(file, fileList) {
+        const res = await this.$business.deleteatt({id:file.id});
+        
+        if(res.code==200){
+          return true;
+        }else{
+          return false;
+        }
       }
+      
 
 
     }

@@ -22,6 +22,11 @@ export default {
   // 修改油站
   updateoil: function(params) {
     return http.post(api.updateoil, params);
+  },
+
+  //删除图片
+  deleteatt:  function(params){
+    return http.get(api.deleteatt,params);
   }
 
 }

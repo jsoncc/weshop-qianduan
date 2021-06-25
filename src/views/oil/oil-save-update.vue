@@ -120,6 +120,7 @@
           this.imglist = [];
           this.oilpics = []; //置空
         } else {
+          this.imglist = [];
           this.oil = val;
           var tmp = this.oil.attachments;
           // 修改功能的图片显示
@@ -153,7 +154,9 @@
         if (this.oil.id) {
           //要执行修改
           rs = this.$business.updateoil(this.oil);
-        } else {
+        }
+
+        else {
           //执行保存，也就是添加油站
           rs = this.$business.saveoil(this.oil)
         }
@@ -168,6 +171,7 @@
           this.issub = false;
         });
       },
+
 
       // this.$business.saveoil(this.oil).then(res => {
       //   if (res.code == 200) {
@@ -232,13 +236,18 @@
       //处理上传的图片集
       processpic(fileList) {
         //先清空
-        this.imageUrls = [];
+        // this.imageUrls = [];
+        this.oilpics=[];
+
         //遍历上传的结果
         for (let i in fileList) {
           let tmp = fileList[i];
-          this.oilpics.push(tmp.response.data);
+          if(!tmp.id){
+            this.oilpics.push(tmp.response.data);
+          }
         }
       },
+
       // // 删除附件-图片
       // removeatt(file, fileList) {
       //   console.log("要删除的图片：", file);
@@ -257,17 +266,18 @@
       //     return false;
       //   });
       // },
+
       // 删除附件-图片--改为异步修改返回的值
       async removeatt(file, fileList) {
         const res = await this.$business.deleteatt({id:file.id});
-        
+
         if(res.code==200){
           return true;
         }else{
           return false;
         }
       }
-      
+
 
 
     }

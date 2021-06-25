@@ -6,21 +6,25 @@
     </el-row>
     <!--第二行 增加搜索功能-->
     <el-row class="search">
-        <el-col :span="5"><el-input placeholder="请输入油站名称" size="small" v-model="filter.oil_name"></el-input></el-col>
-        <el-col :span="1"></el-col>
-        <el-col :span="5"><el-input placeholder="请输入油站地址" size="small" v-model="filter.address"></el-input></el-col>
-         <el-col :span="1"></el-col>
-        <el-col :span="5">
-          <el-select v-model="filter.status" placeholder="请选择">
-            <el-option value="">全部</el-option>
-             <el-option value="1">启用</el-option>
-              <el-option value="0">禁用</el-option>
-          </el-select>
-        </el-col>
-         <el-col :span="1"></el-col>
-        <el-col :span="6">
-           <el-button type="primary" size="small" @click="queryOil()">查询</el-button>
-        </el-col>
+      <el-col :span="5">
+        <el-input placeholder="请输入油站名称" size="small" v-model="filter.oil_name"></el-input>
+      </el-col>
+      <el-col :span="1"></el-col>
+      <el-col :span="5">
+        <el-input placeholder="请输入油站地址" size="small" v-model="filter.address"></el-input>
+      </el-col>
+      <el-col :span="1"></el-col>
+      <el-col :span="5">
+        <el-select v-model="filter.status" placeholder="请选择">
+          <el-option value="">全部</el-option>
+          <el-option value="1">启用</el-option>
+          <el-option value="0">禁用</el-option>
+        </el-select>
+      </el-col>
+      <el-col :span="1"></el-col>
+      <el-col :span="6">
+        <el-button type="primary" size="small" @click="queryOil()">查询</el-button>
+      </el-col>
     </el-row>
 
     <!--表格数据-->
@@ -85,6 +89,8 @@
 
       <el-table-column label="操作">
         <template v-slot="scope">
+          <font-awesome-icon v-bind:icon="['fas','play-circle']" size="lg" title="启用" class="fasbtn" @click="chgstauts(scope.row.id,1)" v-if="scope.row.status==0"></font-awesome-icon>
+          <font-awesome-icon v-bind:icon="['fas','pause-circle']" size="lg" title="禁用" class="fasbtn" @click="chgstauts(scope.row.id,0)" v-else></font-awesome-icon>
           <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn" @click="saveorupdate(scope.row)"></font-awesome-icon>&nbsp&nbsp
           <font-awesome-icon v-bind:icon="['fas','trash-alt']" size="lg" title="删除" class="fasbtn" @click="del(scope.row.id)"></font-awesome-icon>
         </template>
@@ -109,11 +115,12 @@
       //返回一个对象
       return {
         //查询条件
-        filter:{
-          oil_name:'',
-          address:'',
-          status:''
-        },
+        filter: {
+          oil_name: '',
+          address: '',
+          status: ''
+        },
+
         //在这里定义数据属性
         oils: [],
         isshow: false, //是否显示添加框
@@ -126,14 +133,26 @@
     },
 
     methods: {
+      //启用和禁用
+      async chgstauts(id,status){
+        let params = {
+          id:id,
+          status:status
+        };
+        const res = await this.$business.updateoil(params);
+        if(res.code == 200){
+          this.$message.success("操作成功");
+          this.queryOil();
+        }
+      },
       //查询 这个this指的是啥
       queryOil: function() {
         var params = {
           "page": this.page,
-          "pageSize": this.pageSize,
-          "oil_name":this.filter.oil_name,
-          "address":this.filter.address,
-          "status":this.filter.status
+          "pageSize": this.pageSize, //分页功能还没实现
+          "oil_name": this.filter.oil_name,
+          "address": this.filter.address,
+          "status": this.filter.status
         };
         this.$business.queryoil(params).then(response => {
           //判断接口返回的数据是否正常
@@ -183,6 +202,8 @@
         // console.log("edit:", data);
         this.showdata = data;
         this.isshow = true;
+        //methods中init方法的使用，对watch优化
+        this.$refs.saveOrUpdate.init(data);
 
       }
     },
@@ -214,12 +235,12 @@
     margin-right: 20px;
     margin-bottom: 20px;
   }
-  
+
   //
-  .search{
-      display: -webkit-flex;
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
+  .search {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
   }
 </style>

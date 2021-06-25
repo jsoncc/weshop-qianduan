@@ -28,5 +28,7 @@ export default {
   deleteatt:  function(params){
     return http.get(api.deleteatt,params);
   }
+  
+  
 
 }

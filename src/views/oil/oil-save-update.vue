@@ -99,15 +99,19 @@
       visible: {
         type: Boolean,
         default: false
-      },
-      tmpoil: {
-        type: Object
       }
+      /* ,
+            tmpoil: {
+              type: Object
+            } */
     },
 
+    /* 代码复杂，更换为方法中 => init
     //保存再次点击时清空 file_list=[]
     watch: {
       tmpoil: function(val) {
+        this.imglist = [];
+        this.oilpics = []; //置空
         if (val == undefined) {
           this.oil = {
             oil_name: '',
@@ -117,10 +121,9 @@
             discount: '',
             explains: ''
           };
-          this.imglist = [];
-          this.oilpics = []; //置空
+
         } else {
-          this.imglist = [];
+
           this.oil = val;
           var tmp = this.oil.attachments;
           // 修改功能的图片显示
@@ -130,12 +133,55 @@
               id: tmp[i].id
             });
           }
-
+        }
+      },
+      //
+      visible:function(val){
+        if(val){
+          if(this.tmpoil == undefined){
+            this.imglist = [];
+            this.oilpics = []; //置空
+            this.oil = {
+              oil_name: '',
+              address: '',
+              longitude: 0,
+              latitude: 0,
+              discount: '',
+              explains: ''
+            };
+          }
         }
       }
     },
+    */
 
     methods: {
+      init(data) {
+        this.imglist = [];
+        this.oilpics = []; //置空
+        if (data == undefined) {
+          this.oil = {
+            oil_name: '',
+            address: '',
+            longitude: 0,
+            latitude: 0,
+            discount: '',
+            explains: ''
+          };
+
+        } else {
+
+          this.oil = data;
+          var tmp = this.oil.attachments;
+          // 修改功能的图片显示
+          for (var i in tmp) {
+            this.imglist.push({
+              url: this.host + "/" + tmp[i].attUrl,
+              id: tmp[i].id
+            });
+          }
+        }
+      },
 
       // 保存商品
       save() {
@@ -154,9 +200,7 @@
         if (this.oil.id) {
           //要执行修改
           rs = this.$business.updateoil(this.oil);
-        }
-
-        else {
+        } else {
           //执行保存，也就是添加油站
           rs = this.$business.saveoil(this.oil)
         }
@@ -165,8 +209,8 @@
             this.$message.success("保存成功");
             //关闭
             this.close();
-            //抛出一个事件  去触发父组件的方法
-            this.$emit("refeshData");
+            //抛出一个事件  去触发父组件的方法 保存成功后再自动刷一下页面显示数据
+            this.$emit("refreshData");
           }
           this.issub = false;
         });
@@ -237,12 +281,12 @@
       processpic(fileList) {
         //先清空
         // this.imageUrls = [];
-        this.oilpics=[];
+        this.oilpics = [];
 
         //遍历上传的结果
         for (let i in fileList) {
           let tmp = fileList[i];
-          if(!tmp.id){
+          if (!tmp.id) {
             this.oilpics.push(tmp.response.data);
           }
         }
@@ -269,11 +313,13 @@
 
       // 删除附件-图片--改为异步修改返回的值
       async removeatt(file, fileList) {
-        const res = await this.$business.deleteatt({id:file.id});
+        const res = await this.$business.deleteatt({
+          id: file.id
+        });
 
-        if(res.code==200){
+        if (res.code == 200) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }

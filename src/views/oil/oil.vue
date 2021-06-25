@@ -151,6 +151,11 @@
     },
 
     methods: {
+      //油站充值记录
+      topup:function(data){
+        this.$router.push({name:"oilrecord",params:data});
+      },
+
       //分页
       // 更改每页显示的记录数
       chg: function() {
@@ -187,7 +192,7 @@
       queryOil: function() {
         var params = {
           "page": this.page,
-          "pageSize": this.pageSize, //分页功能还没实现
+          "pageSize": this.pageSize, 
           "oil_name": this.filter.oil_name,
           "address": this.filter.address,
           "status": this.filter.status

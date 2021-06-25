@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 const Main = () => import('@/views/main.vue')
 //const 定义一个常量  import 动态导入 一个组件  存到常量Oil
-const Oil=  ()=> import('@/views/oil/oil.vue') // 等价于  function(){return  import('@/views/oil/oil.vue') }
+const Oil = () => import('@/views/oil/oil.vue') // 等价于  function(){return  import('@/views/oil/oil.vue') }
+const OilTopupRecord = ()=>import('@/views/oil/oil-topup-record.vue')
 Vue.use(Router)
-
 
 const router = new Router({
   routes: [{
@@ -14,13 +14,20 @@ const router = new Router({
     meta: {
       title: '微商店首页'
     },
-    children:[
+    children: [{
+        path: '/oil',
+        component: Oil,
+        meta: {
+          title: "油站列表"
+        }
+      },
       {
-          path:'/oil',
-          component:Oil,
-          meta:{
-            title:"油站列表"
-          }
+        path: '/oil/record',
+        name: 'oilrecord',
+        component: OilTopupRecord,
+        meta: {
+          title: "油站充值记录"
+        }
       }
     ]
   }]

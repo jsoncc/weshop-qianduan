@@ -45,6 +45,9 @@
             <el-form-item label="添加日期">
               <span>{{ props.row.adddate }}</span>
             </el-form-item>
+            <el-form-item label="油卡余额">
+              <span>{{ props.row.balance }}</span>
+            </el-form-item>
             <el-form-item label="状态">
               <el-tag v-if="props.row.status==1">启用</el-tag>
               <el-tag type="info" v-else>禁用</el-tag>
@@ -80,6 +83,7 @@
       <el-table-column label="添加日期" prop="adddate">
       </el-table-column>
 
+     
       <el-table-column prop="status" width="100" header-align="center" align="center" label="状态">
         <template v-slot="scope">
           <el-tag v-if="scope.row.status==1">启用</el-tag>
@@ -152,7 +156,7 @@
 
     methods: {
       //油站充值记录
-      topup:function(data){
+      topup(data){
         this.$router.push({name:"oilrecord",params:data});
       },
 
@@ -167,13 +171,6 @@
         //更改当前页数
         this.page=page;
         this.queryOil();
-      },
-
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
       },
 
       //启用和禁用
@@ -192,7 +189,7 @@
       queryOil: function() {
         var params = {
           "page": this.page,
-          "pageSize": this.pageSize, 
+          "pageSize": this.pageSize,
           "oil_name": this.filter.oil_name,
           "address": this.filter.address,
           "status": this.filter.status

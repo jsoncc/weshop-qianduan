@@ -25,10 +25,19 @@ export default {
   },
 
   //删除图片
-  deleteatt:  function(params){
-    return http.get(api.deleteatt,params);
+  deleteatt: function(params) {
+    return http.get(api.deleteatt, params);
+  },
+
+  //添加充值记录
+  saverecord: function(params) {
+    return http.post(api.saverecord, params);
+  },
+
+  //查询充值记录listrecord
+  listrecord: function(params) {
+    return http.post(api.listrecord, params);
   }
-  
-  
+
 
 }

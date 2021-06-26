@@ -37,6 +37,14 @@ export default {
   //查询充值记录listrecord
   listrecord: function(params) {
     return http.post(api.listrecord, params);
+  },
+  //保存字典
+  savedict(params) {
+    return http.post(api.savedict, params);
+  },
+  //字典列表 
+  querydict(params) {
+    return http.get(api.querydict, params);
   }
 
 

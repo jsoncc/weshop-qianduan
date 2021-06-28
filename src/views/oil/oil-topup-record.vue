@@ -75,11 +75,13 @@
       },
 
       async queryData() {
+        
          let params = {
             "page": this.page,
             "pageSize": this.pageSize,
-            "oil": this.oil.id
+            "oid": this.oil.id
           };
+          console.log("params:",params)
           const response = await this.$business.listrecord(params);
           if (response.code == 200) {
             this.oilrecord = response.data; //获取列表数据

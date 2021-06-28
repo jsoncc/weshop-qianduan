@@ -101,7 +101,7 @@
           const res=await this.$business.querydict(parmas);
           if(res.code==200){
             this.groupitems=res.data;
-            console.log("分组信息",this.groupitems)
+            // console.log("分组信息",this.groupitems)
             if(this.groupitems.length>0){
                this.activeitem=this.groupitems[0];
                this.querydict();
@@ -121,7 +121,7 @@
         },
         //选项卡切换
         chg(data){
-          console.log("chg>>>>>>>",data.label)
+          // console.log("chg>>>>>>>",data.label)
           for(let i in this.groupitems){
             let tmp=this.groupitems[i];
             if(tmp.dictname==data.label){

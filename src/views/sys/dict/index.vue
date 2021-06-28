@@ -32,6 +32,10 @@
       </el-table-column>
 
       <el-table-column label="操作" align="center" header-align="center" width="180">
+        <template v-slot="scope">
+          <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn" @click="update(scope.row)"></font-awesome-icon>
+          <font-awesome-icon v-bind:icon="['fas','trash-alt']" size="lg" title="删除" class="fasbtn" @click="deldict(scope.row.id)"></font-awesome-icon>
+        </template>
       </el-table-column>
 
     </el-table>
@@ -60,6 +64,31 @@
       this.init();
     },
     methods: {
+      deldict(id) {
+        this.$confirm('此操作将永久删除该字典, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$business.updatedict({
+            "id": id,
+            "isdel": 1
+          }).then(res => {
+            if (res.code == 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.querydict();
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
       async init() {
         let parmas = {
           "pid": '0'
@@ -121,8 +150,10 @@
         });
       },
       async delTab(id) {
-        const res = await this.$business.deletedicttaball({"id": id});
-        console.log(res,id);
+        const res = await this.$business.deletedicttaball({
+          "id": id
+        });
+        console.log(res, id);
         if (res.code == 200) {
           this.$message({
             type: 'success',
@@ -135,5 +166,11 @@
   }
 </script>
 
-<style>
+<style scoped="scoped" lang="scss">
+  // 修改和删除按钮样式
+  .fasbtn {
+    color: $font-color;
+    cursor: pointer;
+    margin-left: 10px;
+  }
 </style>

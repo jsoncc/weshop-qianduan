@@ -42,9 +42,19 @@ export default {
   savedict(params) {
     return http.post(api.savedict, params);
   },
-  //字典列表 
+  //字典列表
   querydict(params) {
     return http.get(api.querydict, params);
+  },
+
+  //删除字典tab及其子项数据
+  deletedicttaball(params) {
+    return http.get(api.deletedicttaball, params);
+  },
+
+  //修改字典数据
+  updatedict(params) {
+    return http.post(api.updatedict, params);
   }
 
 

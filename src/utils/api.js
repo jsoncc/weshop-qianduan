@@ -9,5 +9,7 @@ export default {
   saverecord: '/api/oil/record/save', //添加充值记录
   listrecord: '/api/oil/record/list', //查询充值记录
   savedict: '/api/sys/dict/save', //保存字典
-  querydict: '/api/sys/dict/list' //字典列表
+  querydict: '/api/sys/dict/list', //字典列表
+  deletedicttaball: '/api/sys/dict/deletetab', //删除字典tab及其子项数据
+  updatedict: '/api/sys/dict/update' //修改字典数据
 }

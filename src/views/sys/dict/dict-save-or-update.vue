@@ -5,7 +5,7 @@
         {{isgroup?'分组编码:':'字典编码:'}}
       </el-col>
       <el-col :span="18">
-        <el-input :placeholder="isgroup?'请输入分组编码(唯一)':'请输入字典编码(唯一)'" v-model="dict.dictcode" size="small"></el-input>
+        <el-input :placeholder="[isgroup?'请输入分组编码(唯一)':'请输入字典编码(唯一)']" v-model="dict.dictcode" size="small"></el-input>
       </el-col>
     </el-row>
     <el-row class="dict-row">
@@ -93,7 +93,12 @@
         if (res.code == 200) {
           this.$message.success("保存成功");
           this.close();
-          this.$emit("refreshData");
+          if(this.isgroup){
+            this.$emit("refreshData");
+          }else{
+            this.$emit("refreshDictData");
+          }
+          
         }
       },
       close() {

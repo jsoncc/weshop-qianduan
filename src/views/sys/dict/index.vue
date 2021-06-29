@@ -161,6 +161,10 @@
           });
           this.init();
         }
+      },
+      update(data){
+        this.showdict = true;
+        this.$refs.dictsave.init('修改字典数据',data.parentId,data);
       }
     }
   }

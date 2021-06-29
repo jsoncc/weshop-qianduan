@@ -55,6 +55,11 @@ export default {
   //修改字典数据
   updatedict(params) {
     return http.post(api.updatedict, params);
+  },
+  
+  //检查编码唯一性
+  checkcode(params){
+    return http.post(api.checkcode,params);
   }
 
 

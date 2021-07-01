@@ -4,8 +4,8 @@
 
       <el-row class="dict-row">
         <el-form-item prop="dictcode" :label="isgroup?'分组编码:':'字典编码:'">
-          <el-input :placeholder="[isgroup?'请输入分组编码(唯一)':'请输入字典编码(唯一)']" v-model="dict.dictcode" size="small" :disabled="title=='修改数据'"
-            @blur="check">
+          <el-input :placeholder="[isgroup?'请输入分组编码(唯一)':'请输入字典编码(唯一)']" v-model="dict.dictcode" size="small"
+          :disabled="title=='修改字典数据'" @blur="check">
           </el-input>
         </el-form-item>
       </el-row>
@@ -26,24 +26,35 @@
       </el-row> -->
 
       <el-row class="dict-row" v-if="!isgroup">
-        <el-col :span="6" style="text-align: right;padding-right: 20px;">字典值:</el-col>
-        <el-col :span="18">
+       <!-- <el-form-item :label="">
           <el-input placeholder="请输入字典值" v-model="dict.dictvalue" size="small"></el-input>
-        </el-col>
+        </el-form-item>
+        -->
+        <el-form-item>
+          <el-col :span="8" style="text-align: right;padding-right: 20px;">字典值:</el-col>
+          <el-col :span="16">
+            <el-input placeholder="请输入字典值" v-model="dict.dictvalue" size="small"></el-input>
+          </el-col>
+        </el-form-item>
+
       </el-row>
 
       <el-row class="dict-row">
-        <el-col :span="6" style="text-align: right;padding-right: 20px;">排序:</el-col>
-        <el-col :span="18">
+        <el-form-item>
+        <el-col :span="10" style="text-align: right;padding-right: 20px;">排序:</el-col>
+        <el-col :span="14">
           <el-input-number v-model="dict.sorts" size="small" :min="0" :step="1"></el-input-number>
         </el-col>
+        </el-form-item>
       </el-row>
 
       <el-row class="dict-row" v-if="!isgroup">
+        <el-form-item>
         <el-col :span="6" style="text-align: right;padding-right: 20px;">备注:</el-col>
         <el-col :span="18">
           <el-input :rows="4" type="textarea" v-model="dict.note" placeholder="请输入描述信息"></el-input>
         </el-col>
+        </el-form-item>
       </el-row>
 
       <el-row style="text-align: center;">
@@ -77,15 +88,15 @@
             },
             {
               min: 3,
-              max: 5,
-              message: '长度在 3 到 5 个字符',
+              max: 10,
+              message: '长度在 3 到 10 个字符',
               trigger: 'blur'
             }
           ],
           dictname: [{
             required: true,
-            message: '请输入至少6个字符',
-            pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{6,}$/, //匹配中文、英文、字母和数字及_
+            message: '请输入至少4个字符',
+            pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{4,}$/, //匹配中文、英文、字母和数字及_
             trigger: 'blur'
           }, ]
         }
@@ -106,16 +117,17 @@
     methods: {
       async check() {
         const res = await this.$business.checkcode({
-          "pid": this.dict.parentId,
+          "parentId": this.dict.parentId,
           "dictcode": this.dict.dictcode
         });
-        if (res == 200) {
-          if (rs.message == "no") {
-            this.$business.warning("该编码已存在，请重新填写");
-            this.iscodeenable = true;
-          } else if (rs.message == "yes") {
-            this.$business.info("该编码符合要求，可以输入");
+        console.log("res>>>",res)
+        if (res.code == 200) {
+          if (res.msg == "no") {
+            this.$message.warning("该编码已存在，请重新填写");
             this.iscodeenable = false;
+          } else if(res.msg == "yes") {
+            // this.$message.info("该编码符合要求，可以输入");
+            this.iscodeenable = true;
           }
         }
       },
@@ -144,7 +156,7 @@
           //验证唯一性不通过，
           if (!valid)
             return;
-            
+
           let promise = null;
           //如果有id，传过来就是修改，没有id，就是添加保存
           if (this.dict.id) {
@@ -152,7 +164,7 @@
           } else {
             promise = this.$business.savedict(this.dict);
           }
-          
+
           promise.then(res => {
             if (res.code == 200) {
               this.$message.success("保存成功");

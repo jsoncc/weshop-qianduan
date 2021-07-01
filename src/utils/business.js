@@ -56,10 +56,23 @@ export default {
   updatedict(params) {
     return http.post(api.updatedict, params);
   },
-  
+
   //检查编码唯一性
   checkcode(params){
     return http.post(api.checkcode,params);
+  },
+
+  //
+  queryChildDict(params){
+    return http.get(api.queryChildDict,params);
+  },
+  
+  saveuser(params){
+    return http.post(api.saveuser,params);
+  },
+  
+  queryuserlist(params){
+    return http.post(api.queryuserlist,params);
   }
 
 

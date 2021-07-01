@@ -111,6 +111,7 @@
         };
         const res = await this.$business.querydict(parmas);
         if (res.code == 200) {
+          this.dicts=[];//删除分组的时候，分组下的字典也一起删除
           this.dicts = res.data;
         }
       },

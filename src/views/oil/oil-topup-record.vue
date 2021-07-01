@@ -1,15 +1,12 @@
 <template>
   <div>
-    <!--第一行增加一个返回按钮-->
-    <el-row class="back">
-      <a href="../">返回</a>
-      <!-- <el-button type="primary" size="small" ">返回</el-button> -->
-    </el-row>
     <el-row class="record_head">
       {{oil.oil_name}}的充值记录
     </el-row>
+
     <el-row style="text-align: left;margin-top: 10px;margin-bottom: 10px;">
-      <el-button type="primary" size="small" @click="save()">充值</el-button>
+      <el-button type="primary" round size="small" icon="el-icon-back" @click="$router.back(-1)">返回</el-button>
+      <el-button type="primary" round size="small" @click="save()">充值</el-button>
     </el-row>
 
     <el-table stripe border style="width: 100%" :data="oilrecord">
@@ -36,7 +33,6 @@
 
 
     <oil-record-save-or-update @refreshData="queryData" ref="recordSave" :visible.sync="showRecord"></oil-record-save-or-update>
-  </div>
   </div>
 </template>
 
@@ -75,7 +71,7 @@
       },
 
       async queryData() {
-        
+
          let params = {
             "page": this.page,
             "pageSize": this.pageSize,
@@ -103,6 +99,7 @@
           this.$refs.recordSave.init(this.oil.id);
         })
       }
+
     },
     created() {
       this.oil = this.$route.params;

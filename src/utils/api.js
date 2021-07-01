@@ -12,5 +12,8 @@ export default {
   querydict: '/api/sys/dict/list', //字典列表
   deletedicttaball: '/api/sys/dict/deletetab', //删除字典tab及其子项数据
   updatedict: '/api/sys/dict/update', //修改字典数据
-  checkcode: '/api/sys/dict/checkcode' //检查编码唯一性
+  checkcode: '/api/sys/dict/checkcode',	//检查编码唯一性
+  queryChildDict:'/api/sys/dict/childdict',	//根据字典编码查询对应的字典数据
+  saveuser:'/api/sys/user/save',  //用户添加
+  queryuserlist:'/api/sys/user/list'  //用户列表查询
 }

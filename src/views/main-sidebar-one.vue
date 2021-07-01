@@ -12,11 +12,14 @@
     data() {
       return {
         items: [{
-          name: '商家',
-          path: '/oil',
-          children: [{
+          name: '商家', //.......
+          path: '/sys/oilprice', //默认当前栏打开的页面
+          children: [ {
             name: '油站列表',
             path: '/oil'
+          },{
+            name: '油价列表',
+            path: '/sys/oilprice'
           }]
         }, {
           name: '订单',
@@ -24,13 +27,16 @@
           icon: ['fas', 'clipboard-list']
         }, {
           name: '设置',
-          path: '/sys/dict',
-          icon:['fas','cog'],
+          path: '/sys/user',    //指定刷新后显示的初始界面
+          icon: ['fas', 'cog'],
           children: [{
+            name: '用户管理',
+            path: '/sys/user' //放在前面就是指定默认显示的初始界面
+          }, {
             name: '字典管理',
-            path: '/index'
+            path: '/sys/dict'
           }]
-        }, ]
+        }]
       }
     },
     created() {

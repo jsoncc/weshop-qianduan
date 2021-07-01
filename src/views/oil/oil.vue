@@ -83,7 +83,7 @@
       <el-table-column label="添加日期" prop="adddate">
       </el-table-column>
 
-     
+
       <el-table-column prop="status" width="100" header-align="center" align="center" label="状态">
         <template v-slot="scope">
           <el-tag v-if="scope.row.status==1">启用</el-tag>
@@ -155,15 +155,29 @@
     },
 
     methods: {
+      //
+
       //油站充值记录
-      topup(data){
-        this.$router.push({name:"oilrecord",params:data});
-      },
+
+      // 点击充值记录后刷新页面数据也还在
+      // topup(data){
+      //   let params={
+      //     "id":data.id,
+      //     "oil_name":data.oil_name
+      //   };
+      //   this.$router.push({"path":"/oil/record",query:params});
+      //   // this.$router.push({name:"oilrecord",params:data});
+      // },
+      
+      // 点击充值记录后刷新页面数据不在了
+       topup(data){
+              this.$router.push({name:"oilrecord",params:data});
+        },
 
       //分页
       // 更改每页显示的记录数
-      chg: function() {
-        this.page = 1; //当每页记录数变化 时   查询 第一页记录
+       chg: function() {
+        this.page = 1; //当每页记录数变化时 查询第一页记录
         this.queryOil();
       },
       //页面跳转

@@ -168,7 +168,7 @@
       //   this.$router.push({"path":"/oil/record",query:params});
       //   // this.$router.push({name:"oilrecord",params:data});
       // },
-      
+
       // 点击充值记录后刷新页面数据不在了
        topup(data){
               this.$router.push({name:"oilrecord",params:data});
@@ -229,7 +229,7 @@
           } else {
             this.$message({
               showClose: true,
-              message: '跟个🐷似的',
+              message: '服务器无响应',
               type: 'error'
             });
           }

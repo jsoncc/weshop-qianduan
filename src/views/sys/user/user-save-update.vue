@@ -122,6 +122,7 @@
         console.log("用户类型----",res)
         if (res.code == 200) {
           this.usertypes = res.data;
+          // this.$emit("refreshData");
           console.log("用户类型", this.usertypes)
         }
       },

@@ -27,9 +27,9 @@
     data() {
       return {
         user: {
-          username: '',
-          password: '',
-          yzm: ''
+          username: 'zhangsan',
+          password: '123456',
+          yzm: '11'
         },
         rules: {
           username: [{

@@ -95,7 +95,7 @@
         <template v-slot="scope">
           <font-awesome-icon v-bind:icon="['fas','play-circle']" size="lg" title="启用" class="fasbtn" @click="chgstauts(scope.row.id,1)" v-if="scope.row.status==0"></font-awesome-icon>
           <font-awesome-icon v-bind:icon="['fas','pause-circle']" size="lg" title="禁用" class="fasbtn" @click="chgstauts(scope.row.id,0)" v-else></font-awesome-icon>
-          <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn" @click="saveorupdate(scope.row)"></font-awesome-icon>
+          <font-awesome-icon v-bind:icon="['fas','edit']" size="lg" title="编辑" class="fasbtn" @click="saveorupdate(scope.row)" ></font-awesome-icon>
           <font-awesome-icon v-bind:icon="['fas','trash-alt']" size="lg" title="删除" class="fasbtn" @click="del(scope.row.id)"></font-awesome-icon>
           <font-awesome-icon v-bind:icon="['fas','yen-sign']" size="lg" title="充值记录" class="fasbtn" @click="topup(scope.row)"></font-awesome-icon>
         </template>

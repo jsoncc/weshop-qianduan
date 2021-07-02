@@ -15,5 +15,6 @@ export default {
   checkcode: '/api/sys/dict/checkcode',	//检查编码唯一性
   queryChildDict:'/api/sys/dict/childdict',	//根据字典编码查询对应的字典数据
   saveuser:'/api/sys/user/save',  //用户添加
-  queryuserlist:'/api/sys/user/list'  //用户列表查询
+  queryuserlist:'/api/sys/user/list',  //用户列表查询
+  login:'/api/common/login' //登录
 }

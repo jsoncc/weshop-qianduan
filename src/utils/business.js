@@ -73,6 +73,11 @@ export default {
   
   queryuserlist(params){
     return http.post(api.queryuserlist,params);
+  },
+  
+  //登录
+  login(params){
+    return http.post(api.login,params);
   }
 
 

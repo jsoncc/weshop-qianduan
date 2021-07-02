@@ -154,6 +154,7 @@
     },
     methods: {
 
+      //启用和禁用
       async chgstauts(id, status) {
         let params = {
           id: id,

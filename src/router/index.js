@@ -6,12 +6,22 @@ const Oil = () => import('@/views/oil/oil.vue') // 等价于  function(){return 
 const OilTopupRecord = () => import('@/views/oil/oil-topup-record.vue')
 const DictIndex = () => import('@/views/sys/dict/index.vue')
 const OilPrice = () => import('@/views/sys/oilprice/oilprice.vue')
-const User=()=>import('@/views/sys/user/user.vue')
+const User = () => import('@/views/sys/user/user.vue')
+const Login =() => import('@/views/common/Login.vue')
 Vue.use(Router)
 
 const router = new Router({
-  routes: [{
-    path: '/',
+  routes: [
+    {
+      path: '/',
+      name: 'login',
+      component: Login,
+      meta: {
+        title: '登录'
+      }
+    },
+    {
+    path: '/main',
     name: 'main',
     component: Main,
     meta: {
@@ -41,19 +51,19 @@ const router = new Router({
         }
       },
       {
-        path:'/sys/oilprice',
-        name:'oilprice',
-        component:OilPrice,
-        meta:{
-          title:"油价列表"
+        path: '/sys/oilprice',
+        name: 'oilprice',
+        component: OilPrice,
+        meta: {
+          title: "油价列表"
         }
       },
       {
-        path:'/sys/user',
-        name:'user',
-        component:User,
-        meta:{
-          title:"用户管理"
+        path: '/sys/user',
+        name: 'user',
+        component: User,
+        meta: {
+          title: "用户管理"
         }
       }
 

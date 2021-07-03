@@ -58,7 +58,7 @@
           this.$refs.loginForm.validate(val=>{
              if(!val)
                return;
-             console.log("用户登录信息",this.user)
+             // console.log("用户登录信息",this.user)
              this.$business.login(this.user).then(res=>{
                if(res.code==200){
                     //将用户信息存储到本地

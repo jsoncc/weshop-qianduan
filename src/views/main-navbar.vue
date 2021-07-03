@@ -25,16 +25,40 @@
       </el-col>
     </el-row>
 
+  <!-- 导入别的vue文件，需要三步： -->
+  <!-- 1. 修改密码 -->
+  <ModPassword :visible.sync="showmodpwd" ref="modpwd"> </ModPassword>
+
   </div>
 </template>
 
 <script>
+  //2. 导入密码修改
+  const ModPassword = ()=>import('@/views/common/ModPassword.vue')
+
   export default {
+    // 3.
+    components:{
+      ModPassword
+    },
+    data(){
+      return{
+        showmodpwd:false
+      }
+    },
     methods: {
+      init(){
+        this.user={
+          password: '',
+          newpassword: '',
+          confirmpassword: '',
+          id: ''
+        };
+      },
       tofold: function(val) {
         this.siteBarFold = val;
       },
-      logout:function(){
+      logout(){
         /* 非正确的退出登录，是跳转
         localStorage.removeItem("weshop_user");
         this.$router.push("/"); */
@@ -56,11 +80,14 @@
         });
       },
       //下拉框的修改密码和退出登录
-      handleCommand(command){
+      handleCommand(common){
         // this.$message('click on item ' + command);//提示点击的信息
-        if(command=="modpwd"){//修改密码
-
-        }else if(command=="exit"){//退出登录
+        if(common=="modpwd"){//修改密码
+          this.showmodpwd = true;
+          this.$nextTick(()=>{
+            this.$refs.modpwd.init();
+          })
+        }else if(common=="exit"){//退出登录
           this.logout();
         }
       }

@@ -16,5 +16,10 @@ export default {
   queryChildDict:'/api/sys/dict/childdict',	//根据字典编码查询对应的字典数据
   saveuser:'/api/sys/user/save',  //用户添加
   queryuserlist:'/api/sys/user/list',  //用户列表查询
-  login:'/api/common/login' //登录
+  login:'/api/common/login', //登录
+  savemenu:'/api/sys/menu/save',  //添加菜单
+  querymenu:'/api/sys/menu/child', //查询菜单
+  querytree:'/api/sys/menu/tree',  //查询菜单树
+  saverole:"/api/sys/role/save", //保存角色
+  queryrole:'/api/sys/role/list'  //查询角色列表
 }

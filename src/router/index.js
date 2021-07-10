@@ -8,6 +8,10 @@ const DictIndex = () => import('@/views/sys/dict/index.vue')
 const OilPrice = () => import('@/views/sys/oilprice/oilprice.vue')
 const User = () => import('@/views/sys/user/user.vue')
 const Login = () => import('@/views/common/Login.vue')
+const Menu = ()=>import('@/views/sys/menu/menu.vue')
+const Role = ()=>import('@/views/sys/role/role.vue')
+const OilOrder = ()=>import('@/views/order/oil/oil-order.vue')
+
 Vue.use(Router)
 
 const router = new Router({
@@ -63,6 +67,30 @@ const router = new Router({
           component: User,
           meta: {
             title: "用户管理"
+          }
+        },
+        {
+          path: '/sys/menu',
+          name: 'menu',
+          component: Menu,
+          meta: {
+            title: "菜单管理"
+          }
+        },
+        {
+          path: '/sys/role',
+          name: 'role',
+          component: Role,
+          meta: {
+            title: "角色管理"
+          }
+        },
+        {
+          path: '/order/oil',
+          name: 'OilOrder',
+          component: OilOrder,
+          meta: {
+            title: "订单列表"
           }
         }
 

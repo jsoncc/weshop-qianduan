@@ -66,18 +66,43 @@ export default {
   queryChildDict(params){
     return http.get(api.queryChildDict,params);
   },
-  
+
   saveuser(params){
     return http.post(api.saveuser,params);
   },
-  
+
   queryuserlist(params){
     return http.post(api.queryuserlist,params);
   },
-  
+
   //登录
   login(params){
     return http.post(api.login,params);
+  },
+
+  //添加菜单
+  savemenu(params){
+    return http.post(api.savemenu,params);
+  },
+
+  //查询菜单
+  querymenu(params){
+    return http.get(api.querymenu,params);
+  },
+
+  //查询菜单树
+  querytree(params){
+    return http.get(api.querytree,params);
+  },
+
+  //保存角色
+  saverole(params){
+    return http.post(api.saverole,params);
+  },
+  
+  //查询角色列表
+  queryrole(params){
+    return http.get(api.queryrole,params);
   }
 
 

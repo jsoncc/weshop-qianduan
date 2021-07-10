@@ -23,15 +23,29 @@
           }]
         }, {
           name: '订单',
-          path: '',
-          icon: ['fas', 'clipboard-list']
+          path: '/order/oil',
+          icon: ['fas', 'clipboard-list'],
+          children:[
+            {
+              name: '订单列表',
+              path: '/order/oil'
+            }
+          ]
         }, {
           name: '设置',
-          path: '/sys/user',    //指定刷新后显示的初始界面
+          path: '/sys/role',    //指定刷新后显示的初始界面
           icon: ['fas', 'cog'],
-          children: [{
+          children: [
+            {
+              name: '角色管理',
+              path: '/sys/role' //放在前面就是指定默认显示的初始界面
+            },
+            {
+              name: '菜单管理',
+              path: '/sys/menu' //放在前面就是指定默认显示的初始界面
+            }, {
             name: '用户管理',
-            path: '/sys/user' //放在前面就是指定默认显示的初始界面
+            path: '/sys/user'
           }, {
             name: '字典管理',
             path: '/sys/dict'

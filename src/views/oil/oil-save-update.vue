@@ -1,6 +1,6 @@
 <template>
   <!--弹框-->
-  <el-dialog title="油站保存" :visible="visible" width="40%" :modal-append-to-body="false" @close="close">
+  <el-dialog title="油站保存" :visible="visible" width="68%" class="oil_width" :modal-append-to-body="false" @close="close">
     <el-row class="oil_row">
       <el-col :span="6" class="oil_label">油站名称:</el-col>
       <el-col :span="14" class="oil_ipt_root">
@@ -30,7 +30,8 @@
     <el-row class="oil_row">
       <el-col :span="6" class="oil_label">说明:</el-col>
       <el-col :span="14" class="oil_ipt_root">
-        <el-input size="small" placeholder="请输入优惠信息" type="textarea" :rows="4" v-model="oil.explains"></el-input>
+        <tinymce :height="150" ref="content" v-model="oil.explains"></tinymce>
+        <!-- <el-input size="small" placeholder="请输入说明信息" type="textarea" :rows="4" v-model="oil.explains"></el-input> -->
       </el-col>
       <el-col :span="4">&nbsp;</el-col>
     </el-row>
@@ -69,6 +70,9 @@
 </template>
 
 <script>
+  //导入富文本
+  import Tinymce from '@/components/Tinymce'
+
   //引入api @相当于src
   import api from '@/utils/api.js'
 
@@ -93,6 +97,9 @@
         imageUrls: [],
         issub: false
       };
+    },
+    components: {
+      Tinymce //富文本选择框
     },
 
     props: {
@@ -335,7 +342,7 @@
     display: -webkit-flex;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   .oil_label {
@@ -350,7 +357,6 @@
     text-align: left;
   }
 
-
   .avatar {
     width: 178px;
     height: 178px;
@@ -358,4 +364,6 @@
     float: left;
     margin-left: 10px;
   }
+
+
 </style>
